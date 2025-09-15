@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "./../../../node_modules/react-redux/src/hooks/useDispatch";
+import { useDispatch } from "react-redux";
 import { registerUser } from "../../store/thunkFunctions";
 const RegisterPage = () => {
   const {
@@ -10,7 +10,7 @@ const RegisterPage = () => {
     reset,
   } = useForm({ mode: "onChange" });
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); //store에 액션을 보내 상태 변경을 하는 트리거, state update 역할
 
   const onSubmit = ({ email, password, name }) => {
     const body = {
