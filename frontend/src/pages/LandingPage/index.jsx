@@ -1,7 +1,7 @@
 import React from "react";
 
-const index = () => {
-  return <div>index</div>;
+const LandingPage = () => {
+  return <div>LandingPage</div>;
 };
 
-export default index;
+export default LandingPage;
