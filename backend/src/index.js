@@ -4,6 +4,7 @@ import path from "path";
 import cors from "cors";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import usersRouter from "./routes/users.js";
 
 dotenv.config();
 
@@ -31,15 +32,12 @@ app.get("/", (req, res, next) => {
   });
 });
 
-app.post("/", (req, res) => {
-  console.log(req.body);
-  res.json(req.body);
-});
-
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.send(error.message || "에러가 발생하였습니다");
 });
+
+app.use("/users", usersRouter);
 
 app.use(express.static(path.join(__dirname, "../uploads")));
 
