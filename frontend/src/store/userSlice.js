@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser } from "./thunkFunctions";
+import { loginUser, registerUser } from "./thunkFunctions";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -32,6 +32,23 @@ const userSlice = createSlice({
         toast.info("회원가입을 성공했습니다.");
       })
       .addCase(registerUser.rejected, (state, action) => {
+        //실패했을 때, 로딩 스피너 off, 에러 메시지
+        state.isLoading = false;
+        state.error = action.payload;
+        toast.error(action.payload);
+      })
+      .addCase(loginUser.pending, (state) => {
+        //thunk 시작 직후, 로딩 스피너 on
+        state.isLoading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        //성공했을 때, 로딩 스피너 off,
+        state.isLoading = false;
+        state.userData = action.payload;
+        state.isAuth = true;
+        localStorage.setItem("accessToken", action.payload.accessToken);
+      })
+      .addCase(loginUser.rejected, (state, action) => {
         //실패했을 때, 로딩 스피너 off, 에러 메시지
         state.isLoading = false;
         state.error = action.payload;

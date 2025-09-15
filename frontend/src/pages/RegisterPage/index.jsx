@@ -40,6 +40,7 @@ const RegisterPage = () => {
       message: "최소 6자 입니다.",
     },
   };
+
   return (
     <section className="flex flex-col justify-center mt-20 max-w-[400px] m-auto">
       <div className="p-6 bg-white rounded-md shadow-md">
