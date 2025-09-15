@@ -1,8 +1,20 @@
 import express, { response } from "express";
 import User from "./../models/User.js";
 import jwt from "jsonwebtoken";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
+
+//유저 데이터 인증
+router.get("/auth", auth, async (req, res, next) => {
+  return res.json({
+    id: req.user._id,
+    email: req.user.email,
+    name: req.user.name,
+    role: req.user.role,
+    image: req.user.image,
+  });
+});
 
 //유저 데이터 저장
 router.post("/register", async (req, res, next) => {
