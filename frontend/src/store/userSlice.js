@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { registerUser } from "./thunkFunctions";
+import { toast } from "react-toastify";
 
 const initialState = {
   userData: {
@@ -18,6 +19,8 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
+    //registerUser = thunkFunction에서 createAsyncThunk 함수를 사용함
+    // createAsyncThunk 함수는 return 값으로 pending, fulfilled, rejected를 반환
     builder
       .addCase(registerUser.pending, (state) => {
         //thunk 시작 직후, 로딩 스피너 on
@@ -26,11 +29,13 @@ const userSlice = createSlice({
       .addCase(registerUser.fulfilled, (state) => {
         //성공했을 때, 로딩 스피너 off,
         state.isLoading = false;
+        toast.info("회원가입을 성공했습니다.");
       })
       .addCase(registerUser.rejected, (state, action) => {
         //실패했을 때, 로딩 스피너 off, 에러 메시지
         state.isLoading = false;
         state.error = action.payload;
+        toast.error(action.payload);
       });
   },
 });
