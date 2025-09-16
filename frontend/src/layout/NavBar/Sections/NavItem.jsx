@@ -7,7 +7,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 const routes = [
   { to: "/login", name: "로그인", auth: false },
   { to: "/register", name: "회원가입", auth: false },
-  { to: "/productUpload", name: "업로드", auth: true },
+  { to: "/product/upload", name: "업로드", auth: true },
   {
     to: "/user/cart",
     name: "카트",
