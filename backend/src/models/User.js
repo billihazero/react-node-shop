@@ -20,6 +20,14 @@ const userSchema = mongoose.Schema({
     default: 0,
   },
   image: String,
+  cart: {
+    type: Array,
+    dafault: [],
+  },
+  history: {
+    type: Array,
+    default: [],
+  },
 });
 
 //save 하기 전에 비밀번호 hash
