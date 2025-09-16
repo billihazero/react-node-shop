@@ -5,17 +5,6 @@ import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
-//유저 데이터 인증
-router.get("/auth", auth, async (req, res, next) => {
-  return res.json({
-    id: req.user._id,
-    email: req.user.email,
-    name: req.user.name,
-    role: req.user.role,
-    image: req.user.image,
-  });
-});
-
 //유저 데이터 저장
 router.post("/register", async (req, res, next) => {
   try {
@@ -52,6 +41,26 @@ router.post("/login", async (req, res, next) => {
 
     return res.json({ user, accessToken });
   } catch (error) {}
+});
+
+//유저 데이터 인증
+router.get("/auth", auth, async (req, res, next) => {
+  return res.json({
+    id: req.user._id,
+    email: req.user.email,
+    name: req.user.name,
+    role: req.user.role,
+    image: req.user.image,
+  });
+});
+
+//로그아웃
+router.post("/logout", auth, async (req, res, next) => {
+  try {
+    return res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default router;
