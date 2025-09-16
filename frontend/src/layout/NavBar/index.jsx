@@ -28,7 +28,7 @@ const Navbar = () => {
           </div>
         </div>
         {/* mobile nav-items*/}
-        <div>{menu && <NavItem />}</div>
+        <div>{menu && <NavItem mobile />}</div>
       </div>
     </section>
   );
