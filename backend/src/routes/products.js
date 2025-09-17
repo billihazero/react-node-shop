@@ -1,8 +1,20 @@
 import express from "express";
+import multer from "multer";
 import Product from "./../models/Product.js";
 import auth from "../middleware/auth.js";
 
 const router = express.Router();
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage: storage }).single("file");
 
 router.post("/", auth, async (req, res, next) => {
   try {
@@ -14,4 +26,12 @@ router.post("/", auth, async (req, res, next) => {
   }
 });
 
+router.post("/image", auth, async (req, res, next) => {
+  upload(req, res, (err) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    return res.json({ fileName: res.req.file.filename });
+  });
+});
 export default router;
