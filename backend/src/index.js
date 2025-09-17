@@ -5,6 +5,7 @@ import cors from "cors";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import usersRouter from "./routes/users.js";
+import productsRouter from "./routes/products.js";
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ app.use((error, req, res, next) => {
 });
 
 app.use("/users", usersRouter);
+app.use("/products", productsRouter);
 
 app.use(express.static(path.join(__dirname, "../uploads")));
 

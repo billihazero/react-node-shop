@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
   image: String,
   cart: {
     type: Array,
-    dafault: [],
+    default: [],
   },
   history: {
     type: Array,

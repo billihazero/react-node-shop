@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 const productSchema = mongoose.Schema({
-  wirter: {
+  writer: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
