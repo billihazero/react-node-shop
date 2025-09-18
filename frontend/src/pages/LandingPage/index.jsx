@@ -6,9 +6,9 @@ import CardItem from "./Sections/CardItem";
 import axiosInstance from "./../../utils/axios";
 
 const LandingPage = () => {
-  const limit = 4;
+  const limit = 4; //가져올 데이터 개수
   const [products, setProducts] = useState([]);
-  const [skip, setSkip] = useState(0); //어디서부터 어디까지 skip 할건지
+  const [skip, setSkip] = useState(0); //어디서부터 데이터를 가져오는지
   const [hasMore, setHasMore] = useState(false); //더 가져올 데이터가 있는지, 가져올 데이터가 있을 때만 더보기 보여줌
   const [filters, setFilters] = useState({
     continents: [],
@@ -35,11 +35,28 @@ const LandingPage = () => {
     };
     try {
       const response = await axiosInstance.get("/products", { params });
-      setProducts(response.data.products);
+      if (loadMore) {
+        setProducts([...products, ...response.data.products]);
+      } else {
+        setProducts(response.data.products);
+      }
+      setHasMore(response.data.hasMore);
     } catch (error) {
       console.error(error);
     }
   };
+
+  const handleLoadMore = () => {
+    const body = {
+      skip: skip + limit,
+      limit,
+      loadMore: true,
+      filters,
+    };
+    fetchProducts(body);
+    setSkip(skip + limit);
+  };
+
   return (
     <section>
       <div className="text-center m-7">
@@ -68,7 +85,10 @@ const LandingPage = () => {
       {/* loadMore */}
       {hasMore && (
         <div className="flex justify-center mt-5">
-          <button className="px-4 py-2 mt-5 text-white bg-black rounded-md hover:bg-gray-500">
+          <button
+            onClick={handleLoadMore}
+            className="px-4 py-2 mt-5 text-white bg-black rounded-md hover:bg-gray-500"
+          >
             더 보기
           </button>
         </div>
