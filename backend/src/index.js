@@ -43,6 +43,8 @@ app.use("/products", productsRouter);
 
 app.use(express.static(path.join(__dirname, "../uploads")));
 
+app.set("query parser", "extended");
+
 app.listen(4000, () => {
   console.log("4000번에서 실행이 되었습니다");
 });

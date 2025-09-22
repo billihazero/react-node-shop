@@ -22,14 +22,23 @@ router.get("/", async (req, res, next) => {
   const limit = req.query.limit ? Number(req.query.limit) : 20;
   const skip = req.query.skip ? Number(req.query.skip) : 0;
 
+  let findArgs = {};
+  for (let key in req.query.filters) {
+    console.log("key", key);
+    if (req.query.filters[key].length > 0) {
+      findArgs[key] = req.query.filters[key];
+    }
+  }
+  console.log(findArgs);
+
   try {
-    const products = await Product.find()
+    const products = await Product.find(findArgs)
       .populate("writer")
       .sort([[sortBy, order]])
       .skip(skip)
       .limit(limit);
 
-    const productsTotal = await Product.countDocuments(); //위의 조건에 맞는 결과의 개수
+    const productsTotal = await Product.countDocuments(findArgs); //위의 조건에 맞는 결과의 개수
     const hasMore = skip + limit < productsTotal ? true : false;
 
     return res.status(200).json({
